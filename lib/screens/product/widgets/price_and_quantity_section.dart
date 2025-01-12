@@ -54,7 +54,7 @@ class _PriceAndQuantitySectionState extends State<PriceAndQuantitySection> {
                 },
               ),
               SizedBox(
-                width: 10, // Fixed width for TextField
+                width: 20, // Fixed width for TextField
                 child: TextField(
                   controller: quantityController,
                   textAlign: TextAlign.center,
@@ -68,7 +68,7 @@ class _PriceAndQuantitySectionState extends State<PriceAndQuantitySection> {
                     contentPadding: EdgeInsets.zero,
                   ),
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
               ),

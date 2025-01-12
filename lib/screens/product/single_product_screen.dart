@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:cb011999/screens/product/widgets/product_details_card.dart';
 import 'package:cb011999/screens/product/widgets/product_image_card.dart';
+import 'package:cb011999/widgets/footer.dart';
 import 'package:flutter/material.dart';
 
 class SingleProductScreen extends StatelessWidget {
@@ -27,7 +28,8 @@ class SingleProductScreen extends StatelessWidget {
                 description:
                     "Yarrah Organic Dog food Small Breeds has been specially developed for small dogs that weigh less than 15 kilos. This complete food is 100% organic, contains 23% chicken and is free from added sugars.",
                 price: "5.99",
-                category: "organic")
+                category: "organic"),
+            Footer(),
           ],
         ),
       ),
