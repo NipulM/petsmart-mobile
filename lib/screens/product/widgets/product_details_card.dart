@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ProductDetailsCard extends StatelessWidget {
   final String title;
   final String description;
-  final String price;
+  final double price;
   final String category;
 
   const ProductDetailsCard({
