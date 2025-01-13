@@ -1,6 +1,7 @@
 import 'package:cb011999/screens/about/about_us_screen.dart';
 import 'package:cb011999/screens/home/home_screen.dart';
 import 'package:cb011999/screens/product/single_product_screen.dart';
+import 'package:cb011999/screens/subscription/subscription_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: const SingleProductScreen(),
       // home: const HomeScreen(),
-      home: const AboutUsScreen(),
+      // home: const AboutUsScreen(),
+      home: const SubscriptionScreen(),
     );
   }
 }
