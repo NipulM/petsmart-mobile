@@ -36,10 +36,11 @@ class HeroSection extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            width: 200,
-            child: Button(buttonText: "Choose a Plan"),
+          Center(
+            child: Container(
+              width: 200,
+              child: Button(buttonText: "Choose a Plan"),
+            ),
           )
         ],
       ),
