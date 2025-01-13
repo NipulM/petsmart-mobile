@@ -1,3 +1,4 @@
+import 'package:cb011999/screens/about/about_us_screen.dart';
 import 'package:cb011999/screens/home/home_screen.dart';
 import 'package:cb011999/screens/product/single_product_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const SingleProductScreen(),
-      home: const HomeScreen(),
+      // home: const HomeScreen(),
+      home: const AboutUsScreen(),
     );
   }
 }

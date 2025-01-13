@@ -60,6 +60,9 @@ flutter:
   assets:
     - assets/images/single_product_example.png
     - assets/images/subscription_plan_example.jpg
+    - assets/images/about_us_1.png
+    - assets/images/about_us_2.png
+    - assets/images/blog_example.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
