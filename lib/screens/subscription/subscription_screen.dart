@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cb011999/screens/subscription/widgets/hero_section.dart';
 import 'package:cb011999/screens/subscription/widgets/subscription_card.dart';
+import 'package:cb011999/widgets/bottom_navigation_bar.dart';
 import 'package:cb011999/widgets/button.dart';
 import 'package:cb011999/widgets/footer.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,7 @@ class SubscriptionScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }

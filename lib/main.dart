@@ -20,9 +20,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const SingleProductScreen(),
-      // home: const HomeScreen(),
+      home: const HomeScreen(),
       // home: const AboutUsScreen(),
-      home: const SubscriptionScreen(),
+      // home: const SubscriptionScreen(),
     );
   }
 }

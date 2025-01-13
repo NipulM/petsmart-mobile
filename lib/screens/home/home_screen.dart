@@ -2,6 +2,7 @@
 import 'package:cb011999/screens/home/widgets/hero_section.dart';
 import 'package:cb011999/screens/home/widgets/new_arrivals_section.dart';
 import 'package:cb011999/screens/home/widgets/subscription_section.dart';
+import 'package:cb011999/widgets/bottom_navigation_bar.dart';
 import 'package:cb011999/widgets/footer.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }
