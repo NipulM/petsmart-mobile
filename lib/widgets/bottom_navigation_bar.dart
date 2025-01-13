@@ -14,11 +14,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
-            label: 'Search',
+            label: 'Subscription',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Subscription',
+            label: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.question_mark_outlined),
