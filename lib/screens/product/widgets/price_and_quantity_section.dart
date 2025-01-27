@@ -25,7 +25,7 @@ class _PriceAndQuantitySectionState extends State<PriceAndQuantitySection> {
           "\$${widget.price}",
           style: const TextStyle(
             fontSize: 24,
-            fontFamily: 'Signika Light',
+            fontFamily: 'Roboto Light',
           ),
         ),
         Container(

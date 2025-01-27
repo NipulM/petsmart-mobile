@@ -16,7 +16,7 @@ class HeroContainer extends StatelessWidget {
           Text("About Us",
               style: const TextStyle(
                 fontSize: 24,
-                fontFamily: 'Signika Regular',
+                fontFamily: 'Roboto Regular',
               )),
           SizedBox(
             height: 15,
@@ -29,7 +29,7 @@ class HeroContainer extends StatelessWidget {
             "At PetSmart, we believe in making the world a better place—one paw at a time. As pet lovers ourselves, we understand the joy and responsibility of caring for your furry, feathery, or scaly companions. That's why we created an e-commerce platform dedicated to providing high-quality, eco-friendly, and sustainable pet products that both you and your pets will love.",
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
         ],

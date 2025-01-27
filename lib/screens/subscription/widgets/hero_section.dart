@@ -23,7 +23,7 @@ class HeroSection extends StatelessWidget {
           Text(title,
               style: TextStyle(
                 fontSize: 24,
-                fontFamily: 'Signika Medium',
+                fontFamily: 'Roboto Medium',
               )),
           SizedBox(
             height: 15,
@@ -31,7 +31,7 @@ class HeroSection extends StatelessWidget {
           Text(description,
               style: TextStyle(
                 fontSize: 16,
-                fontFamily: 'Signika Regular',
+                fontFamily: 'Roboto Regular',
               )),
           SizedBox(
             height: 15,

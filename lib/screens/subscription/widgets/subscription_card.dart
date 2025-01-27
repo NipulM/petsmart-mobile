@@ -49,7 +49,7 @@ class SubscriptionCard extends StatelessWidget {
             title,
             style: const TextStyle(
               fontSize: 24,
-              fontFamily: 'Signika Bold',
+              fontFamily: 'Roboto Bold',
             ),
           ),
           SizedBox(
@@ -59,7 +59,7 @@ class SubscriptionCard extends StatelessWidget {
             description,
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
           SizedBox(
@@ -81,7 +81,7 @@ class SubscriptionCard extends StatelessWidget {
                           feature,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Signika Regular',
+                            fontFamily: 'Roboto Regular',
                           ),
                         ),
                       )
@@ -95,14 +95,14 @@ class SubscriptionCard extends StatelessWidget {
             "\$${price.toString()}",
             style: const TextStyle(
               fontSize: 46,
-              fontFamily: 'Signika Medium',
+              fontFamily: 'Roboto Medium',
             ),
           ),
           Text(
             shortDescription,
             style: const TextStyle(
               fontSize: 14,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
           SizedBox(

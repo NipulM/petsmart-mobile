@@ -21,7 +21,7 @@ class AboutUsScreen extends StatelessWidget {
             child: Text("Welcome to PetSmart!",
                 style: TextStyle(
                   fontSize: 28,
-                  fontFamily: 'Signika Medium',
+                  fontFamily: 'Roboto Medium',
                 )),
           ),
           SizedBox(
@@ -38,7 +38,7 @@ class AboutUsScreen extends StatelessWidget {
                     "Looking for tips on pet grooming, training, or sustainable living? Check out our blog, where we share weekly articles and videos to help you care for your pets with love and knowledge.",
                     style: TextStyle(
                       fontSize: 16,
-                      fontFamily: 'Signika Regular',
+                      fontFamily: 'Roboto Regular',
                     )),
                 SizedBox(
                   height: 10,
@@ -47,7 +47,7 @@ class AboutUsScreen extends StatelessWidget {
                     "Thank you for being part of the PetSmart community—where happy pets meet a healthier planet! ❤️",
                     style: TextStyle(
                       fontSize: 16,
-                      fontFamily: 'Signika Regular',
+                      fontFamily: 'Roboto Regular',
                     )),
               ],
             ),
@@ -62,7 +62,7 @@ class AboutUsScreen extends StatelessWidget {
               child: Text("Care & Comfort Corner",
                   style: TextStyle(
                     fontSize: 22,
-                    fontFamily: 'Signika Bold',
+                    fontFamily: 'Roboto Bold',
                   )),
             ),
           ),

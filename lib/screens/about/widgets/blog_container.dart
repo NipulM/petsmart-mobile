@@ -41,7 +41,7 @@ class BlogContainer extends StatelessWidget {
             title,
             style: const TextStyle(
               fontSize: 22,
-              fontFamily: 'Signika Medium',
+              fontFamily: 'Roboto Medium',
             ),
           ),
           SizedBox(
@@ -51,7 +51,7 @@ class BlogContainer extends StatelessWidget {
             description,
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
           SizedBox(

@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           title: const Text('',
               style: TextStyle(
-                fontFamily: "Signika Regular",
+                fontFamily: "Roboto Regular",
                 fontWeight: FontWeight.bold, // Use font weight to specify bold
               )),
         ),
@@ -43,14 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text("Login",
                         style: TextStyle(
-                          fontFamily: "Signika Regular",
+                          fontFamily: "Roboto Regular",
                           fontSize: 24,
                           fontWeight: FontWeight
                               .bold, // Use font weight to specify bold
                         )),
                     Text("Welcome Back!",
                         style: TextStyle(
-                          fontFamily: "Signika Regular",
+                          fontFamily: "Roboto Regular",
                           fontSize: 24,
                           fontWeight: FontWeight
                               .bold, // Use font weight to specify bold
@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextFormField(
                               decoration: InputDecoration(
                                 labelStyle: TextStyle(
-                                  fontFamily: "Signika Regular",
+                                  fontFamily: "Roboto Regular",
                                 ),
                                 labelText: "Email Address",
                                 border: OutlineInputBorder(
@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: InputDecoration(
                                 labelText: "Password",
                                 labelStyle: TextStyle(
-                                  fontFamily: "Signika Regular",
+                                  fontFamily: "Roboto Regular",
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: Text("Log in",
                               style: TextStyle(
-                                fontFamily: "Signika Regular",
+                                fontFamily: "Roboto Regular",
                                 fontSize: 20,
                                 color: Colors
                                     .white, // Use font weight to specify bold
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             "Don't have an account? ",
                             style: TextStyle(
-                              fontFamily: "Signika Regular",
+                              fontFamily: "Roboto Regular",
                               fontSize: 16,
                             ),
                           ),
@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               "Sign up",
                               style: TextStyle(
-                                fontFamily: "Signika Bold",
+                                fontFamily: "Roboto Bold",
                                 fontSize: 16,
                                 color: Colors.blue,
                               ),

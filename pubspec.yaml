@@ -99,6 +99,21 @@ flutter:
     - family: Signika Medium
       fonts:
         - asset: assets/fonts/Signika-Medium.ttf
+    - family: Roboto Bold
+      fonts:
+        - asset: assets/fonts/Roboto-Bold.ttf
+    - family: Roboto Light
+      fonts:
+        - asset: assets/fonts/Roboto-Light.ttf
+    - family: Roboto Regular
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+    - family: Roboto SemiBold
+      fonts:
+        - asset: assets/fonts/Roboto-SemiBold.ttf
+    - family: Roboto Medium
+      fonts:
+        - asset: assets/fonts/Roboto-Medium.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

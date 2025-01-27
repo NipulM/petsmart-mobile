@@ -22,7 +22,7 @@ class OurMissionConatiner extends StatelessWidget {
           Text("Our Mission",
               style: const TextStyle(
                 fontSize: 24,
-                fontFamily: 'Signika Regular',
+                fontFamily: 'Roboto Regular',
               )),
           SizedBox(
             height: 15,
@@ -35,7 +35,7 @@ class OurMissionConatiner extends StatelessWidget {
             "Our Mission is simple:",
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
           Column(
@@ -45,7 +45,7 @@ class OurMissionConatiner extends StatelessWidget {
                       Text("•",
                           style: const TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Signika Regular',
+                            fontFamily: 'Roboto Regular',
                           )),
                       Container(
                         margin: const EdgeInsets.only(left: 10, top: 8),
@@ -54,7 +54,7 @@ class OurMissionConatiner extends StatelessWidget {
                           feature,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Signika Regular',
+                            fontFamily: 'Roboto Regular',
                           ),
                         ),
                       )

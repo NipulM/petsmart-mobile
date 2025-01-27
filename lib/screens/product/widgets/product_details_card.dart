@@ -33,14 +33,14 @@ class ProductDetailsCard extends StatelessWidget {
             title,
             style: const TextStyle(
               fontSize: 24,
-              fontFamily: 'Signika Bold',
+              fontFamily: 'Roboto Bold',
             ),
           ),
           Text(
             "#${category}",
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
           SizedBox(
@@ -50,7 +50,7 @@ class ProductDetailsCard extends StatelessWidget {
             description,
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Signika Regular',
+              fontFamily: 'Roboto Regular',
             ),
           ),
           SizedBox(

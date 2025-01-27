@@ -21,7 +21,7 @@ class Footer extends StatelessWidget {
               style: TextStyle(
                 color: const Color.fromARGB(255, 0, 0, 0),
                 fontSize: 24,
-                fontFamily: "Signika Medium",
+                fontFamily: "Roboto Medium",
               )),
           SizedBox(
             height: 10,
@@ -31,7 +31,7 @@ class Footer extends StatelessWidget {
             style: TextStyle(
               color: const Color.fromARGB(255, 0, 0, 0),
               fontSize: 16,
-              fontFamily: "Signika Regular",
+              fontFamily: "Roboto Regular",
             ),
           ),
           Text(
@@ -39,7 +39,7 @@ class Footer extends StatelessWidget {
             style: TextStyle(
               color: const Color.fromARGB(255, 0, 0, 0),
               fontSize: 16,
-              fontFamily: "Signika Regular",
+              fontFamily: "Roboto Regular",
             ),
           ),
           Text(
@@ -47,7 +47,7 @@ class Footer extends StatelessWidget {
             style: TextStyle(
               color: const Color.fromARGB(255, 0, 0, 0),
               fontSize: 16,
-              fontFamily: "Signika Regular",
+              fontFamily: "Roboto Regular",
             ),
           ),
           Text(
@@ -55,7 +55,7 @@ class Footer extends StatelessWidget {
             style: TextStyle(
               color: const Color.fromARGB(255, 0, 0, 0),
               fontSize: 16,
-              fontFamily: "Signika Regular",
+              fontFamily: "Roboto Regular",
             ),
           ),
           SizedBox(
@@ -65,7 +65,7 @@ class Footer extends StatelessWidget {
               style: TextStyle(
                 color: const Color.fromARGB(255, 0, 0, 0),
                 fontSize: 24,
-                fontFamily: "Signika Medium",
+                fontFamily: "Roboto Medium",
               )),
           SizedBox(
             height: 10,
@@ -83,7 +83,7 @@ class Footer extends StatelessWidget {
                   style: TextStyle(
                     color: const Color.fromARGB(255, 0, 0, 0),
                     fontSize: 16,
-                    fontFamily: "Signika Regular",
+                    fontFamily: "Roboto Regular",
                   ))
             ],
           ),
@@ -103,7 +103,7 @@ class Footer extends StatelessWidget {
                   style: TextStyle(
                     color: const Color.fromARGB(255, 0, 0, 0),
                     fontSize: 16,
-                    fontFamily: "Signika Regular",
+                    fontFamily: "Roboto Regular",
                   ))
             ],
           ),
@@ -123,7 +123,7 @@ class Footer extends StatelessWidget {
                   style: TextStyle(
                     color: const Color.fromARGB(255, 0, 0, 0),
                     fontSize: 16,
-                    fontFamily: "Signika Regular",
+                    fontFamily: "Roboto Regular",
                   ))
             ],
           ),
@@ -136,7 +136,7 @@ class Footer extends StatelessWidget {
               style: TextStyle(
                 color: const Color.fromARGB(255, 0, 0, 0),
                 fontSize: 16,
-                fontFamily: "Signika Medium",
+                fontFamily: "Roboto Medium",
               ),
             ),
           ),

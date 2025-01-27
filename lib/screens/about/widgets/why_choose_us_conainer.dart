@@ -23,7 +23,7 @@ class WhyChooseUsConainer extends StatelessWidget {
           Text("Why Choose Us?",
               style: const TextStyle(
                 fontSize: 24,
-                fontFamily: 'Signika Regular',
+                fontFamily: 'Roboto Regular',
               )),
           SizedBox(
             height: 15,
@@ -34,7 +34,7 @@ class WhyChooseUsConainer extends StatelessWidget {
               "We know you have options when it comes to shopping for your pets, but here’s what sets us apart:",
               style: const TextStyle(
                 fontSize: 16,
-                fontFamily: 'Signika Regular',
+                fontFamily: 'Roboto Regular',
               ),
             ),
           ),
@@ -45,7 +45,7 @@ class WhyChooseUsConainer extends StatelessWidget {
                       Text("•",
                           style: const TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Signika Regular',
+                            fontFamily: 'Roboto Regular',
                           )),
                       Container(
                         margin: const EdgeInsets.only(left: 10, top: 8),
@@ -54,7 +54,7 @@ class WhyChooseUsConainer extends StatelessWidget {
                           feature,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontFamily: 'Signika Regular',
+                            fontFamily: 'Roboto Regular',
                           ),
                         ),
                       )

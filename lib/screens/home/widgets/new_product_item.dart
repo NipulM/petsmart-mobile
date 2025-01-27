@@ -45,7 +45,7 @@ class NewProductItem extends StatelessWidget {
             productName,
             style: const TextStyle(
               fontSize: 18,
-              fontFamily: 'Signika Bold',
+              fontFamily: 'Roboto Bold',
             ),
           ),
           SizedBox(
@@ -57,7 +57,7 @@ class NewProductItem extends StatelessWidget {
               productShortDescription,
               style: const TextStyle(
                 fontSize: 16,
-                fontFamily: 'Signika Regular',
+                fontFamily: 'Roboto Regular',
               ),
             ),
           ),
@@ -68,7 +68,7 @@ class NewProductItem extends StatelessWidget {
             '\$${productPrice.toString()}',
             style: const TextStyle(
               fontSize: 20,
-              fontFamily: 'Signika Medium',
+              fontFamily: 'Roboto Medium',
             ),
           ),
         ],

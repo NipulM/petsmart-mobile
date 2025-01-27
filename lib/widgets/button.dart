@@ -14,7 +14,7 @@ class Button extends StatelessWidget {
         onPressed: () {},
         child: Text(
           buttonText,
-          style: TextStyle(fontFamily: "Signika Regular", fontSize: 18),
+          style: TextStyle(fontFamily: "Roboto Regular", fontSize: 18),
         ),
       ),
     );
