@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Register Page :)',
+          title: const Text('',
               style: TextStyle(
                 fontFamily: "Signika Regular",
                 fontWeight: FontWeight.bold, // Use font weight to specify bold
@@ -117,9 +118,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             name = nameInput.text;
                             email = emailAddress.text;
                             pass = password.text;
-                            print("Name: $name");
-                            print("Email: $email");
-                            print("Password: $pass");
+
+                            if (email.isEmpty || pass.isEmpty || name.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Email and password or name cannot be empty.'),
+                                ),
+                              );
+                              return;
+                            }
+
+                            if (!email.contains('@')) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Please enter a valid email address.'),
+                                ),
+                              );
+                              return;
+                            }
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -156,13 +174,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                            fontFamily: "Signika Regular",
-                            fontSize: 16,
-                          ),
-                        ),
+                        GestureDetector(
+                            onTap: () {
+                              // push replacement because i dont wanna repeat the login screen
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            },
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                fontFamily: "Signika Bold",
+                                fontSize: 16,
+                                color: Colors.blue,
+                              ),
+                            )),
                       ],
                     ),
                   )
