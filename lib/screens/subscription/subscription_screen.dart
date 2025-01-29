@@ -2,7 +2,6 @@
 import 'package:cb011999/screens/subscription/widgets/hero_section.dart';
 import 'package:cb011999/screens/subscription/widgets/subscription_card.dart';
 import 'package:cb011999/widgets/button.dart';
-import 'package:cb011999/widgets/footer.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionScreen extends StatelessWidget {
@@ -44,7 +43,6 @@ class SubscriptionScreen extends StatelessWidget {
                 ],
                 price: 49.99,
                 shortDescription: "1 year of premium pet care!"),
-            Footer()
           ],
         ),
       ),

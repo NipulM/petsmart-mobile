@@ -4,7 +4,6 @@ import 'package:cb011999/screens/about/widgets/hero_container.dart';
 import 'package:cb011999/screens/about/widgets/image_container.dart';
 import 'package:cb011999/screens/about/widgets/our_mission_cotainer.dart';
 import 'package:cb011999/screens/about/widgets/why_choose_us_conainer.dart';
-import 'package:cb011999/widgets/footer.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsScreen extends StatelessWidget {
@@ -71,7 +70,6 @@ class AboutUsScreen extends StatelessWidget {
               description:
                   "Keeping your pet clean and well-groomed is essential for their health and happiness. From regular brushing to choosing the right shampoo, small efforts can make a big difference. Whether you're a seasoned pet parent or a newbie, these quick grooming tips will have your furry friend looking and feeling their best in no time!",
               imageUrl: "assets/images/blog_example.jpg"),
-          Footer()
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'package:cb011999/screens/home/widgets/hero_section.dart';
 import 'package:cb011999/screens/home/widgets/new_arrivals_section.dart';
 import 'package:cb011999/screens/home/widgets/subscription_section.dart';
 
-import 'package:cb011999/widgets/footer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,7 +32,6 @@ class HomeScreen extends StatelessWidget {
             description:
                 "Say goodbye to the stress of running out of pet essentials. With PetSmart's flexible subscription plans, you'll get regular deliveries tailored to your needs—keeping your pets happy, healthy, and entertained all year round.",
           ),
-          Footer()
         ],
       ),
     );
