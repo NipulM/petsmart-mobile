@@ -13,12 +13,14 @@ class BlogContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: isDarkMode ? const Color(0xFF2C2C2C) : Colors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

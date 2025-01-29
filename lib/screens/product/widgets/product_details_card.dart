@@ -19,28 +19,41 @@ class ProductDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: isDarkMode ? const Color(0xFF2C2C2C) : Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode
+                ? Colors.black.withOpacity(0.3)
+                : Colors.grey.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontFamily: 'Roboto Bold',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           Text(
             "#${category}",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontFamily: 'Roboto Regular',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(
@@ -48,9 +61,10 @@ class ProductDetailsCard extends StatelessWidget {
           ),
           Text(
             description,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontFamily: 'Roboto Regular',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(

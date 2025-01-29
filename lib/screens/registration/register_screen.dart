@@ -20,6 +20,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('',
@@ -35,7 +37,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
               margin: EdgeInsets.all(35),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: const Color.fromARGB(255, 255, 255, 255),
+                color: isDarkMode ? Color(0xFF2C2C2C) : Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: isDarkMode
+                        ? Colors.black.withOpacity(0.3)
+                        : Colors.grey.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
               height: 475, // Set the color to red
               child: Column(

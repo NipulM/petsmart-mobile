@@ -17,10 +17,21 @@ class NewProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: isDarkMode ? Color(0xFF2C2C2C) : Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode
+                ? Colors.black.withOpacity(0.3)
+                : Colors.grey.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       margin: const EdgeInsets.only(right: 6),
       padding: const EdgeInsets.all(7),
@@ -43,9 +54,12 @@ class NewProductItem extends StatelessWidget {
           ),
           Text(
             productName,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontFamily: 'Roboto Bold',
+              color: isDarkMode
+                  ? Colors.white.withOpacity(0.87)
+                  : Colors.black.withOpacity(0.87),
             ),
           ),
           SizedBox(
@@ -55,9 +69,12 @@ class NewProductItem extends StatelessWidget {
             width: 200,
             child: Text(
               productShortDescription,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Roboto Regular',
+                color: isDarkMode
+                    ? Colors.white.withOpacity(0.87)
+                    : Colors.black.withOpacity(0.87),
               ),
             ),
           ),
@@ -66,9 +83,12 @@ class NewProductItem extends StatelessWidget {
           ),
           Text(
             '\$${productPrice.toString()}',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontFamily: 'Roboto Medium',
+              color: isDarkMode
+                  ? Colors.white.withOpacity(0.87)
+                  : Colors.black.withOpacity(0.87),
             ),
           ),
         ],

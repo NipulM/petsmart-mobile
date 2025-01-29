@@ -8,21 +8,35 @@ class SubscriptionCard extends StatelessWidget {
   final String description;
   final List<String> features;
 
-  const SubscriptionCard(
-      {super.key,
-      required this.title,
-      required this.imageUrl,
-      required this.description,
-      required this.features});
+  const SubscriptionCard({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+    required this.description,
+    required this.features,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // Get the current theme brightness
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: isDarkMode ? Color(0xFF2C2C2C) : Colors.white,
+        // Add subtle shadow based on theme
+        boxShadow: [
+          BoxShadow(
+            color: isDarkMode
+                ? Colors.black.withOpacity(0.3)
+                : Colors.grey.withOpacity(0.2),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,18 +55,22 @@ class SubscriptionCard extends StatelessWidget {
           SizedBox(height: 20),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontFamily: 'Roboto Bold',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 20),
           Text(
             description,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontFamily: 'Roboto Regular',
+              color: isDarkMode
+                  ? Colors.white.withOpacity(0.87)
+                  : Colors.black.withOpacity(0.87),
             ),
             textAlign: TextAlign.center,
           ),
@@ -68,15 +86,21 @@ class SubscriptionCard extends StatelessWidget {
                           Icon(
                             Icons.check,
                             size: 20,
-                            color: const Color.fromARGB(255, 0, 0, 0),
+                            color: isDarkMode
+                                ? Color(0xFF6DBF73) // Green icon in dark mode
+                                : Color(
+                                    0xFF6DBF73), // Keep same green in light mode
                           ),
                           SizedBox(width: 10),
                           Expanded(
                             child: Text(
                               feature,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Roboto Regular',
+                                color: isDarkMode
+                                    ? Colors.white.withOpacity(0.87)
+                                    : Colors.black.withOpacity(0.87),
                               ),
                             ),
                           ),

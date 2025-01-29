@@ -21,12 +21,14 @@ class SubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: isDarkMode ? Color(0xFF2C2C2C) : Colors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,9 +49,10 @@ class SubscriptionCard extends StatelessWidget {
           ),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontFamily: 'Roboto Bold',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(
@@ -57,9 +60,10 @@ class SubscriptionCard extends StatelessWidget {
           ),
           Text(
             description,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontFamily: 'Roboto Regular',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(
@@ -76,15 +80,18 @@ class SubscriptionCard extends StatelessWidget {
                             Icon(
                               Icons.check,
                               size: 20,
-                              color: const Color.fromARGB(255, 0, 0, 0),
+                              color: isDarkMode
+                                  ? Color(0xFF6DBF73)
+                                  : Color(0xFF6DBF73),
                             ),
                             SizedBox(width: 10),
                             Expanded(
                                 child: Text(
                               feature,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Roboto Regular',
+                                color: isDarkMode ? Colors.white : Colors.black,
                               ),
                             ))
                           ]),
@@ -96,16 +103,18 @@ class SubscriptionCard extends StatelessWidget {
           ),
           Text(
             "\$${price.toString()}",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 46,
               fontFamily: 'Roboto Medium',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           Text(
             shortDescription,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontFamily: 'Roboto Regular',
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(
