@@ -41,24 +41,29 @@ class OurMissionConatiner extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: missions
-                .map((feature) => Row(children: [
-                      Text("•",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Roboto Regular',
-                          )),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10, top: 8),
-                        width: 350,
-                        child: Text(
-                          feature,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Roboto Regular',
-                          ),
-                        ),
-                      )
-                    ]))
+                .map((feature) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("•",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Roboto Regular',
+                              )),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              feature,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Roboto Regular',
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
                 .toList(),
           ),
         ],

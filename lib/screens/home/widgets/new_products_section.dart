@@ -44,6 +44,15 @@ class NewProductsSection extends StatelessWidget {
                           "Organic Paws Kangaroo Recipe offers a natural, balanced meal for cats and dogs of all ages.",
                       productImage: "assets/images/single_product_example.png",
                       productPrice: 5.99),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: NewProductItem(
+                      productName: "Original Blend",
+                      productShortDescription:
+                          "Organic Paws Kangaroo Recipe offers a natural, balanced meal for cats and dogs of all ages.",
+                      productImage: "assets/images/single_product_example.png",
+                      productPrice: 5.99),
                 )
               ],
             ),

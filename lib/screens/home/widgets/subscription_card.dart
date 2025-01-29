@@ -38,56 +38,55 @@ class SubscriptionCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Text(
             title,
             style: const TextStyle(
               fontSize: 24,
               fontFamily: 'Roboto Bold',
             ),
+            textAlign: TextAlign.center,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Text(
             description,
             style: const TextStyle(
               fontSize: 16,
               fontFamily: 'Roboto Regular',
             ),
+            textAlign: TextAlign.center,
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: features
-                .map((feature) => Row(children: [
-                      Icon(
-                        Icons.check,
-                        size: 20,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10, top: 8),
-                        width: 300,
-                        child: Text(
-                          feature,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Roboto Regular',
+                .map((feature) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.check,
+                            size: 20,
+                            color: const Color.fromARGB(255, 0, 0, 0),
                           ),
-                        ),
-                      )
-                    ]))
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              feature,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Roboto Regular',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
                 .toList(),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Button(buttonText: "Subscribe to ${title}"),
+          SizedBox(height: 20),
+          Button(buttonText: "Subscribe to $title"),
         ],
       ),
     );

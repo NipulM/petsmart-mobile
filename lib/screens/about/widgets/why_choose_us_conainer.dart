@@ -25,40 +25,41 @@ class WhyChooseUsConainer extends StatelessWidget {
                 fontSize: 24,
                 fontFamily: 'Roboto Regular',
               )),
-          SizedBox(
-            height: 15,
-          ),
-          Container(
-            width: 350,
-            child: Text(
-              "We know you have options when it comes to shopping for your pets, but here’s what sets us apart:",
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Roboto Regular',
-              ),
+          SizedBox(height: 15),
+          Text(
+            "We know you have options when it comes to shopping for your pets, but here's what sets us apart:",
+            style: const TextStyle(
+              fontSize: 16,
+              fontFamily: 'Roboto Regular',
             ),
           ),
+          SizedBox(height: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: whyChooseUsList
-                .map((feature) => Row(children: [
-                      Text("•",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Roboto Regular',
-                          )),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10, top: 8),
-                        width: 350,
-                        child: Text(
-                          feature,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Roboto Regular',
-                          ),
-                        ),
-                      )
-                    ]))
+                .map((feature) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("•",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Roboto Regular',
+                              )),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              feature,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Roboto Regular',
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
                 .toList(),
           ),
         ],

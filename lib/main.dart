@@ -32,58 +32,6 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
-// class _MainScreenState extends State<MainScreen> {
-//   int _selectedIndex = 0;
-
-//   static const List<Widget> _widgetOptions = <Widget>[
-//     HomeScreen(),
-//     SubscriptionScreen(),
-//     SingleProductScreen(),
-//     AboutUsScreen(),
-//   ];
-
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: _widgetOptions[_selectedIndex],
-//       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         items: const <BottomNavigationBarItem>[
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home_filled),
-//             label: 'Home',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.add),
-//             label: 'Subscription',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.search),
-//             label: 'Search',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.question_mark_outlined),
-//             label: 'About',
-//           ),
-//         ],
-//         currentIndex: _selectedIndex,
-//         selectedItemColor: Color(0xFF6DBF73),
-//         unselectedItemColor: Colors.grey,
-//         type: BottomNavigationBarType.fixed,
-//         onTap: _onItemTapped,
-//         backgroundColor: Colors.white,
-//       ),
-//     );
-//   }
-// }
-
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   final List<int> _navigationStack = [0];
