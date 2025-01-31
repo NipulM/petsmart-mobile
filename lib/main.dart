@@ -111,6 +111,7 @@ class _MainScreenState extends State<MainScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 70,
           leading: _navigationStack.length > 1
               ? IconButton(
                   icon: const Icon(Icons.arrow_back),
