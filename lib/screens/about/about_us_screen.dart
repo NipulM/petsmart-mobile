@@ -14,14 +14,17 @@ class AboutUsScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Align(
             alignment: Alignment.center,
-            child: Text("Welcome to PetSmart!",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontFamily: 'Roboto Medium',
-                )),
+            child: Container(
+              margin: EdgeInsets.only(top: 15),
+              child: Text("Welcome to PetSmart!",
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontFamily: 'Roboto Medium',
+                  )),
+            ),
           ),
           SizedBox(
             height: 10,
@@ -33,21 +36,27 @@ class AboutUsScreen extends StatelessWidget {
             padding: EdgeInsets.all(15.0),
             child: Column(
               children: [
-                Text(
-                    "Looking for tips on pet grooming, training, or sustainable living? Check out our blog, where we share weekly articles and videos to help you care for your pets with love and knowledge.",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Roboto Regular',
-                    )),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                      "Looking for tips on pet grooming, training, or sustainable living? Check out our blog, where we share weekly articles and videos to help you care for your pets with love and knowledge.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Roboto Regular',
+                      )),
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                Text(
-                    "Thank you for being part of the PetSmart community—where happy pets meet a healthier planet! ❤️",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Roboto Regular',
-                    )),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                      "Thank you for being part of the PetSmart community—where happy pets meet a healthier planet! ❤️",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Roboto Regular',
+                      )),
+                ),
               ],
             ),
           ),

@@ -22,6 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
+    final orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('',
@@ -33,7 +35,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              width: double.infinity,
+              width: orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.width * 0.9
+                  : MediaQuery.of(context).size.width * 0.6,
               margin: EdgeInsets.all(35),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -149,14 +153,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               );
                               return;
                             }
+
+                            // show a message saying that the user has been registered
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'User $name with email $email has been registered.'),
+                              ),
+                            );
+
+                            // go back to login screen
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                            );
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF7754F6),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
                           padding: EdgeInsets.symmetric(
                               horizontal: 50, vertical: 10),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                         child: Text("Signup",

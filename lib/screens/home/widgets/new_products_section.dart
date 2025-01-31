@@ -19,7 +19,9 @@ class NewProductsSection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(
+                    right: 15,
+                  ),
                   child: NewProductItem(
                       productName: "Original Blend",
                       productShortDescription:

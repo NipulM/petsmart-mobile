@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cb011999/screens/product/single_product_screen.dart';
+import 'package:cb011999/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class NewProductItem extends StatelessWidget {
@@ -66,7 +67,7 @@ class NewProductItem extends StatelessWidget {
             height: 5,
           ),
           Container(
-            width: 200,
+            width: 225,
             child: Text(
               productShortDescription,
               style: TextStyle(
@@ -81,14 +82,56 @@ class NewProductItem extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text(
-            '\$${productPrice.toString()}',
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'Roboto Medium',
-              color: isDarkMode
-                  ? Colors.white.withOpacity(0.87)
-                  : Colors.black.withOpacity(0.87),
+          Container(
+            width: 225, // Match the image width
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 80, // Fixed width for price section
+                  child: Text(
+                    '\$${productPrice.toString()}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Roboto Medium',
+                      color: isDarkMode
+                          ? Colors.white.withOpacity(0.87)
+                          : Colors.black.withOpacity(0.87),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      height: 36,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onPrimary,
+                          textStyle: Theme.of(context).textTheme.labelLarge,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Item added to cart'),
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        },
+                        child: Text('Add to cart'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

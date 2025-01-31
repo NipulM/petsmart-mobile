@@ -21,6 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
+    final orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('',
@@ -33,7 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Center(
               child: Container(
-                width: double.infinity,
+                width: orientation == Orientation.portrait
+                    ? MediaQuery.of(context).size.width * 0.9
+                    : MediaQuery.of(context).size.width * 0.6,
                 margin: EdgeInsets.all(35),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -114,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       margin: EdgeInsets.symmetric(horizontal: 30),
                       child: SizedBox(
                         width: double.infinity,
-                        height: 65, // Adjust the height of the button
+                        height: 65,
                         child: ElevatedButton(
                           onPressed: () {
                             setState(() {
@@ -148,11 +152,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF7754F6),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
+                            foregroundColor:
+                                Theme.of(context).colorScheme.onPrimary,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 10),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                           child: Text("Log in",
