@@ -3,9 +3,20 @@ import 'package:cb011999/screens/home/home_screen.dart';
 import 'package:cb011999/screens/product/single_product_screen.dart';
 import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:cb011999/screens/subscription/subscription_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyCLRLovAfjDymWId3hrjEtvFoYCSRxg9aE",
+      appId: "1:848272952100:web:9a1c44dc536822530f01b1",
+      messagingSenderId: "848272952100",
+      projectId: "petsmart-flutter",
+      storageBucket: "petsmart-flutter.firebasestorage.app",
+    ),
+  );
   runApp(const MyApp());
 }
 

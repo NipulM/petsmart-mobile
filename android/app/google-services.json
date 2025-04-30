@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "848272952100",
+    "project_id": "petsmart-flutter",
+    "storage_bucket": "petsmart-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848272952100:android:f974397f4d0ffabd0f01b1",
+        "android_client_info": {
+          "package_name": "com.example.cb011999"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlkRCsA7WDUZWZl_ze0Tn2w6Bji-seKxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

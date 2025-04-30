@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cb011999/main.dart';
 import 'package:cb011999/screens/registration/register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +17,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String email = "";
   String pass = "";
+
+  Future<void> login(email, password) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MainScreen()));
+    } catch (e) {
+      // Handle login error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed. Please check your credentials.'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,10 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return;
                               }
 
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MainScreen()));
+                              login(email, pass);
                             });
                           },
                           style: ElevatedButton.styleFrom(
