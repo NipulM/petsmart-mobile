@@ -8,15 +8,23 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyCLRLovAfjDymWId3hrjEtvFoYCSRxg9aE",
-      appId: "1:848272952100:web:9a1c44dc536822530f01b1",
-      messagingSenderId: "848272952100",
-      projectId: "petsmart-flutter",
-      storageBucket: "petsmart-flutter.firebasestorage.app",
-    ),
-  );
+  try {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyCLRLovAfjDymWId3hrjEtvFoYCSRxg9aE",
+        appId: "1:848272952100:web:9a1c44dc536822530f01b1",
+        messagingSenderId: "848272952100",
+        projectId: "petsmart-flutter",
+        storageBucket: "petsmart-flutter.firebasestorage.app",
+      ),
+    );
+  } catch (e) {
+    if (e.toString().contains('duplicate-app')) {
+      print('Firebase already initialized');
+    } else {
+      rethrow;
+    }
+  }
   runApp(const MyApp());
 }
 

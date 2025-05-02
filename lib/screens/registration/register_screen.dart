@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cb011999/screens/registration/login_screen.dart';
+import 'package:cb011999/utils/db_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:cb011999/models/user.dart' as local_user;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -19,6 +22,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String email = "";
   String pass = "";
 
+  final dbHelper = DatabaseHelper();
+  Database? database;
+
+  // in a function with async
+  Future<void> initDatabase() async {
+    database = await dbHelper.initDatabase();
+  }
+
   Future<void> register(email, password) async {
     try {
       final credential =
@@ -26,6 +37,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: email,
         password: password,
       );
+
+      // print user sub
+      print(credential.user!.uid);
+      await initDatabase();
+
+      // Create a new user object
+      local_user.User user = local_user.User(
+        userId: credential.user!.uid,
+        name: name,
+        email: email,
+        createdAt: DateTime.now(),
+      );
+      // Insert the user into the database
+      dbHelper.insertUser(user);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
