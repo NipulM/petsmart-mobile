@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:cb011999/screens/about/about_us_screen.dart';
 import 'package:cb011999/screens/home/home_screen.dart';
 import 'package:cb011999/screens/product/single_product_screen.dart';
@@ -95,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   final List<int> _navigationStack = [0];
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     SubscriptionScreen(),
     SingleProductScreen(),
