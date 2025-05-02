@@ -31,7 +31,7 @@ class BlogContainer extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image(
-                image: AssetImage(imageUrl),
+                image: NetworkImage(imageUrl),
                 fit: BoxFit.cover,
               ),
             ),

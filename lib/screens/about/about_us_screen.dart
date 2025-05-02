@@ -5,9 +5,42 @@ import 'package:cb011999/screens/about/widgets/image_container.dart';
 import 'package:cb011999/screens/about/widgets/our_mission_cotainer.dart';
 import 'package:cb011999/screens/about/widgets/why_choose_us_conainer.dart';
 import 'package:flutter/material.dart';
+import 'package:cb011999/services/blog_service.dart';
+import 'package:cb011999/models/blog.dart';
 
-class AboutUsScreen extends StatelessWidget {
+class AboutUsScreen extends StatefulWidget {
   const AboutUsScreen({super.key});
+
+  @override
+  State<AboutUsScreen> createState() => _AboutUsScreenState();
+}
+
+class _AboutUsScreenState extends State<AboutUsScreen> {
+  final BlogService _blogService = BlogService();
+  List<Blog> _blogs = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBlogs();
+  }
+
+  Future<void> _fetchBlogs() async {
+    try {
+      final blogs = await _blogService.getAllBlogs();
+      setState(() {
+        _blogs = blogs;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      // Handle error appropriately
+      print('Error fetching blogs: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +107,15 @@ class AboutUsScreen extends StatelessWidget {
                   )),
             ),
           ),
-          BlogContainer(
-              title: "5 Easy Grooming Tips for a Happier Pet",
-              description:
-                  "Keeping your pet clean and well-groomed is essential for their health and happiness. From regular brushing to choosing the right shampoo, small efforts can make a big difference. Whether you're a seasoned pet parent or a newbie, these quick grooming tips will have your furry friend looking and feeling their best in no time!",
-              imageUrl: "assets/images/blog_example.jpg"),
+          _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                  children: _blogs.map((blog) => BlogContainer(
+                        title: blog.title,
+                        description: blog.content,
+                        imageUrl: blog.imageUrl,
+                      )).toList(),
+                ),
         ],
       ),
     );

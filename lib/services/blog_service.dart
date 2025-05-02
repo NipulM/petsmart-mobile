@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:cb011999/models/subscription.dart';
+import 'package:cb011999/models/blog.dart';
 import 'package:http/http.dart' as http;
 
-class SubscriptionService {
+class BlogService {
   static const String baseUrl =
       'https://ap-southeast-1.aws.data.mongodb-api.com/app/data-skoohxb/endpoint/data/v1';
   static const String apiKey =
@@ -14,13 +14,13 @@ class SubscriptionService {
         'api-key': apiKey,
       };
 
-  Future<List<Subscription>> getAllSubscriptions() async {
+  Future<List<Blog>> getAllBlogs() async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/action/find'),
         headers: _headers,
         body: json.encode({
-          "collection": "subscriptions",
+          "collection": "blogs",
           "database": "petsmart",
           "dataSource": "PetsmartCluster",
         }),
@@ -29,22 +29,22 @@ class SubscriptionService {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final List<dynamic> documents = responseData['documents'] ?? [];
-        return documents.map((json) => Subscription.fromJson(json)).toList();
+        return documents.map((json) => Blog.fromJson(json)).toList();
       } else {
-        throw Exception('Failed to load subscriptions: ${response.statusCode}');
+        throw Exception('Failed to load blogs: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to load subscriptions: $e');
+      throw Exception('Failed to load blogs: $e');
     }
   }
 
-  Future<Subscription> getSubscriptionById(String id) async {
+  Future<Blog> getBlogById(String id) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/action/findOne'),
         headers: _headers,
         body: json.encode({
-          "collection": "subscriptions",
+          "collection": "blogs",
           "database": "petsmart",
           "dataSource": "PetsmartCluster",
           "filter": {
@@ -57,14 +57,14 @@ class SubscriptionService {
         final Map<String, dynamic> responseData = json.decode(response.body);
         final document = responseData['document'];
         if (document == null) {
-          throw Exception('Subscription not found');
+          throw Exception('Blog not found');
         }
-        return Subscription.fromJson(document);
+        return Blog.fromJson(document);
       } else {
-        throw Exception('Failed to load subscription: ${response.statusCode}');
+        throw Exception('Failed to load blog: ${response.statusCode}');
       }
     } catch (e) {
-      throw Exception('Failed to load subscription: $e');
+      throw Exception('Failed to load blog: $e');
     }
   }
 }
