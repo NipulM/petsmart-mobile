@@ -70,7 +70,7 @@ class ProductDetailsCard extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          PriceAndQuantitySection(price: "5.99"),
+          PriceAndQuantitySection(price: price.toString()),
           SizedBox(
             height: 20,
           ),

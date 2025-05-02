@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:cb011999/screens/about/about_us_screen.dart';
 import 'package:cb011999/screens/home/home_screen.dart';
-import 'package:cb011999/screens/product/single_product_screen.dart';
 import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:cb011999/screens/subscription/subscription_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -99,7 +98,6 @@ class _MainScreenState extends State<MainScreen> {
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     SubscriptionScreen(),
-    SingleProductScreen(),
     AboutUsScreen(),
   ];
 

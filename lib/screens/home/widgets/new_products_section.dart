@@ -72,6 +72,7 @@ class _NewProductsSectionState extends State<NewProductsSection> {
                                   productName: product.name,
                                   productShortDescription:
                                       product.shortDescription,
+                                  productDescription: product.description,
                                   productImage: product.imageUrl,
                                   productPrice: product.price,
                                 ),
