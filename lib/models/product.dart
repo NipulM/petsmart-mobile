@@ -58,33 +58,4 @@ class Product {
       isNew: json['is_new'],
     );
   }
-
-  // Create a copy of Product with modified fields
-  Product copyWith({
-    String? id,
-    int? productId,
-    String? name,
-    String? shortDescription,
-    double? price,
-    int? stockQuantity,
-    bool? isSeasonal,
-    String? imageUrl,
-    int? categoryId,
-    String? description,
-    bool? isNew,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      productId: productId ?? this.productId,
-      name: name ?? this.name,
-      shortDescription: shortDescription ?? this.shortDescription,
-      price: price ?? this.price,
-      stockQuantity: stockQuantity ?? this.stockQuantity,
-      isSeasonal: isSeasonal ?? this.isSeasonal,
-      imageUrl: imageUrl ?? this.imageUrl,
-      categoryId: categoryId ?? this.categoryId,
-      description: description ?? this.description,
-      isNew: isNew ?? this.isNew,
-    );
-  }
 }
