@@ -80,6 +80,30 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
     await _loadCartAndUserData();
   }
 
+  Future<void> _checkout() async {
+    if (!_userData!.containsKey('name') ||
+        !_userData!.containsKey('email') ||
+        !_userData!.containsKey('phone') ||
+        !_userData!.containsKey('address') ||
+        _userData!['name'] == null ||
+        _userData!['email'] == null ||
+        _userData!['phone'] == null ||
+        _userData!['address'] == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please complete your profile first')),
+      );
+      return;
+    }
+
+    await _cartService.checkout(
+      _userData!['name'],
+      _userData!['email'],
+      _userData!['phone'],
+      _userData!['address'],
+    );
+    await _loadCartAndUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -222,14 +246,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
               padding: const EdgeInsets.all(16),
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Checkout will be implemented soon!'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
+            onPressed: () => _checkout(),
             child: const Text(
               'Proceed to Checkout',
               style: TextStyle(fontSize: 16, color: Colors.black),
