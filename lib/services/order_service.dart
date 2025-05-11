@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cb011999/models/order.dart';
 import 'package:http/http.dart' as http;
 import '../services/token_service.dart';
+import '../services/cart_service.dart';
 
 class OrderService {
   static const String baseUrl = 'http://139.59.116.107/api';
@@ -53,6 +54,8 @@ class OrderService {
 
       // Check if the order was saved successfully
       if (responseData['status'] == 'success') {
+        final cartService = CartService();
+        await cartService.clearCart();
         return order; // Return the original order object
       } else {
         throw Exception('Failed to create order: ${responseData['message']}');
