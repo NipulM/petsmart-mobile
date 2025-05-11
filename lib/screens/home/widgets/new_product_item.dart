@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:cb011999/models/cart_item.dart';
 import 'package:cb011999/screens/product/single_product_screen.dart';
+import 'package:cb011999/services/cart_service.dart';
 import 'package:cb011999/widgets/button.dart';
+import 'package:cb011999/widgets/add_cart_button.dart';
+import 'package:cb011999/widgets/cart_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class NewProductItem extends StatelessWidget {
@@ -71,7 +75,7 @@ class NewProductItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 200,
+              height: 230,
               width: isSearch ? double.infinity : 225,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -134,28 +138,54 @@ class NewProductItem extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: SizedBox(
-                        height: 36,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                            textStyle: Theme.of(context).textTheme.labelLarge,
-                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Item added to cart'),
-                                duration: Duration(seconds: 1),
-                              ),
+                      child: AddCartButton(
+                        buttonText: 'Add to Cart',
+                        onPressed: () async {
+                          try {
+                            final cartService = CartService();
+                            final cartItem = CartItem(
+                              productId: productName.toLowerCase().replaceAll(
+                                  ' ', '_'), // Creating a simple productId
+                              name: productName,
+                              price: productPrice,
+                              quantity: 1,
+                              imageUrl: productImage,
                             );
-                          },
-                          child: Text('Add to cart'),
-                        ),
+
+                            await cartService.addItem(cartItem);
+
+                            if (context.mounted) {
+                              // Show success message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Item added to cart'),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
+
+                              // Show cart bottom sheet
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.75,
+                                  child: const CartBottomSheet(),
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content:
+                                      Text('Error adding item to cart: $e'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          }
+                        },
                       ),
                     ),
                   ),

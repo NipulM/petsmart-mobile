@@ -3,18 +3,35 @@ import 'package:flutter/material.dart';
 
 class PriceAndQuantitySection extends StatefulWidget {
   final String price;
+  final Function(int) onQuantityChanged;
 
-  const PriceAndQuantitySection({super.key, required this.price});
+  const PriceAndQuantitySection({
+    super.key, 
+    required this.price,
+    required this.onQuantityChanged,
+  });
 
   @override
-  State<PriceAndQuantitySection> createState() =>
-      _PriceAndQuantitySectionState();
+  State<PriceAndQuantitySection> createState() => _PriceAndQuantitySectionState();
 }
 
 class _PriceAndQuantitySectionState extends State<PriceAndQuantitySection> {
   TextEditingController quantityController = TextEditingController();
-
   int quantity = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    quantityController.text = quantity.toString();
+  }
+
+  void updateQuantity(int newQuantity) {
+    setState(() {
+      quantity = newQuantity;
+      quantityController.text = quantity.toString();
+      widget.onQuantityChanged(quantity);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,32 +61,30 @@ class _PriceAndQuantitySectionState extends State<PriceAndQuantitySection> {
                   size: 20,
                 ),
                 onPressed: () {
-                  setState(() {
-                    if (quantity == 1) {
-                      return;
-                    }
-                    quantity = quantity - 1;
-                    quantityController.text = quantity.toString();
-                  });
+                  if (quantity > 1) {
+                    updateQuantity(quantity - 1);
+                  }
                 },
               ),
               SizedBox(
-                width: 20, // Fixed width for TextField
+                width: 20,
                 child: TextField(
                   controller: quantityController,
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    hintText: '1',
-                    hintStyle: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.zero,
                   ),
                   style: const TextStyle(
                     color: Color.fromARGB(255, 0, 0, 0),
                   ),
+                  onChanged: (value) {
+                    final newQuantity = int.tryParse(value) ?? 1;
+                    if (newQuantity >= 1 && newQuantity <= 10) {
+                      updateQuantity(newQuantity);
+                    }
+                  },
                 ),
               ),
               IconButton(
@@ -79,13 +94,9 @@ class _PriceAndQuantitySectionState extends State<PriceAndQuantitySection> {
                   size: 20,
                 ),
                 onPressed: () {
-                  setState(() {
-                    if (quantity == 10) {
-                      return;
-                    }
-                    quantity = quantity + 1;
-                    quantityController.text = quantity.toString();
-                  });
+                  if (quantity < 10) {
+                    updateQuantity(quantity + 1);
+                  }
                 },
               ),
             ],

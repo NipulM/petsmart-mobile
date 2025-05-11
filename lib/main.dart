@@ -4,6 +4,7 @@ import 'package:cb011999/screens/home/home_screen.dart';
 import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:cb011999/screens/search/search_screen.dart';
 import 'package:cb011999/screens/subscription/subscription_screen.dart';
+import 'package:cb011999/widgets/cart_bottom_sheet.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -142,7 +143,16 @@ class _MainScreenState extends State<MainScreen> {
             IconButton(
               icon: const Icon(Icons.shopping_cart_outlined),
               iconSize: 25,
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    child: const CartBottomSheet(),
+                  ),
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
