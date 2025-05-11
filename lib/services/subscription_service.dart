@@ -1,35 +1,34 @@
 import 'dart:convert';
 import 'package:cb011999/models/subscription.dart';
 import 'package:http/http.dart' as http;
+import '../services/token_service.dart';
 
 class SubscriptionService {
-  static const String baseUrl =
-      'https://ap-southeast-1.aws.data.mongodb-api.com/app/data-skoohxb/endpoint/data/v1';
-  static const String apiKey =
-      'dXqLJz0zrvJtkU9CtvhxpQvuNQYLUwj68Wqb68BYLURpSkygPD2jGzWAJQjvHVnn';
+  static const String baseUrl = 'http://139.59.116.107/api';
 
-  Map<String, String> get _headers => {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Headers': '*',
-        'api-key': apiKey,
-      };
+  Future<Map<String, String>> get _headers async {
+    final token = await TokenService().getToken();
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+  }
 
   Future<List<Subscription>> getAllSubscriptions() async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/action/find'),
-        headers: _headers,
-        body: json.encode({
-          "collection": "subscriptions",
-          "database": "petsmart",
-          "dataSource": "PetsmartCluster",
-        }),
+      final response = await http.get(
+        Uri.parse('$baseUrl/subscriptions'),
+        headers: await _headers,
       );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        final List<dynamic> documents = responseData['documents'] ?? [];
-        return documents.map((json) => Subscription.fromJson(json)).toList();
+        if (responseData['status'] == 'success') {
+          final List<dynamic> subscriptions = responseData['data'];
+          return subscriptions.map((json) => Subscription.fromJson(json)).toList();
+        } else {
+          throw Exception('API request failed: ${responseData['status']}');
+        }
       } else {
         throw Exception('Failed to load subscriptions: ${response.statusCode}');
       }
@@ -40,26 +39,18 @@ class SubscriptionService {
 
   Future<Subscription> getSubscriptionById(String id) async {
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/action/findOne'),
-        headers: _headers,
-        body: json.encode({
-          "collection": "subscriptions",
-          "database": "petsmart",
-          "dataSource": "PetsmartCluster",
-          "filter": {
-            "_id": {"\$oid": id}
-          }
-        }),
+      final response = await http.get(
+        Uri.parse('$baseUrl/subscriptions/$id'),
+        headers: await _headers,
       );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
-        final document = responseData['document'];
-        if (document == null) {
-          throw Exception('Subscription not found');
+        if (responseData['status'] == 'success') {
+          return Subscription.fromJson(responseData['data']);
+        } else {
+          throw Exception('API request failed: ${responseData['status']}');
         }
-        return Subscription.fromJson(document);
       } else {
         throw Exception('Failed to load subscription: ${response.statusCode}');
       }

@@ -39,23 +39,28 @@ class Subscription {
       throw FormatException('Invalid price format');
     }
 
-    // Handle features conversion from either String or List
     List<String> parseFeatures(dynamic features) {
       if (features is List) {
-        return features.map((e) => e.toString()).toList();
+        return features.map((e) {
+          String feature = e.toString();
+          // Remove any quotes and square brackets
+          feature = feature.replaceAll('"', '').replaceAll('[', '').replaceAll(']', '').trim();
+          return feature;
+        }).toList();
       } else if (features is String) {
-        // If it's a single string, return it as a single-item list
-        return [features];
+        String feature = features.toString();
+        feature = feature.replaceAll('"', '').replaceAll('[', '').replaceAll(']', '').trim();
+        return [feature];
       }
-      return []; // Return empty list if features is null or invalid
+      return [];
     }
 
     return Subscription(
       id: json['_id']?.toString(),
-      subscriptionId: json['subscription_id'],
-      planType: json['plan_type'],
-      description: json['description'],
-      price: parsePrice(json['price']),
+      subscriptionId: (json['subscription_id'] ?? '').toString(),
+      planType: (json['plan_type'] ?? '').toString(),
+      description: json['description'] ?? '',
+      price: parsePrice(json['price'] ?? 0),
       features: parseFeatures(json['features']),
     );
   }

@@ -72,7 +72,7 @@ class _SubscriptionSectionState extends State<SubscriptionSection> {
                   title: subscription.planType,
                   imageUrl: "assets/images/subscription_plan_example.jpg",
                   description: subscription.description,
-                  features: subscription.features.cast<String>(),
+                  features: subscription.features.map((e) => e.toString().trim()).toList(),
                 )).toList(),
         ],
       ),
