@@ -1,6 +1,6 @@
 class Category {
   final String? id;
-  final String categoryId;
+  final int categoryId;
   final String name;
   final String description;
 
@@ -21,7 +21,7 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      categoryId: json['category_id'],
+      categoryId: json['category_id'] as int,
       name: json['name'],
       description: json['description'],
     );

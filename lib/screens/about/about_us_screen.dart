@@ -29,6 +29,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   Future<void> _fetchBlogs() async {
     try {
       final blogs = await _blogService.getAllBlogs();
+      print(blogs);
       setState(() {
         _blogs = blogs;
         _isLoading = false;
@@ -110,11 +111,13 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           _isLoading
               ? Center(child: CircularProgressIndicator())
               : Column(
-                  children: _blogs.map((blog) => BlogContainer(
-                        title: blog.title,
-                        description: blog.content,
-                        imageUrl: blog.imageUrl,
-                      )).toList(),
+                  children: _blogs
+                      .map((blog) => BlogContainer(
+                            title: blog.title,
+                            description: blog.content,
+                            imageUrl: blog.imageUrl,
+                          ))
+                      .toList(),
                 ),
         ],
       ),

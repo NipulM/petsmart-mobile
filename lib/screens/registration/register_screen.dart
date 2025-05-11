@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cb011999/screens/registration/login_screen.dart';
+import 'package:cb011999/services/user_service.dart';
 import 'package:cb011999/utils/db_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String pass = "";
 
   final dbHelper = DatabaseHelper();
+  final userService = UserService();
   Database? database;
 
   // in a function with async
@@ -49,8 +51,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: email,
         createdAt: DateTime.now(),
       );
-      // Insert the user into the database
-      dbHelper.insertUser(user);
+
+      await dbHelper.insertUser(user);
+
+      final apiRegistrationSuccess = await userService.registerUser(
+        name: name,
+        email: email,
+        password: password,
+      );
+
+      if (!apiRegistrationSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Warning: API registration failed, but local and Firebase registration succeeded.'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

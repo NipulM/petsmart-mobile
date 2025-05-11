@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:cb011999/main.dart';
+import 'package:cb011999/services/user_service.dart';
 import 'package:cb011999/screens/registration/register_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailAddress = TextEditingController();
   TextEditingController password = TextEditingController();
+  final userService = UserService();
 
   String email = "";
   String pass = "";
@@ -23,9 +25,29 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainScreen()));
+      final apiResponse = await userService.loginUser(
+        email: email,
+        password: password,
+      );
+      
+      if (!mounted) return;  // Check if widget is still mounted
+      
+      if (apiResponse != null) {
+        print('API Login successful');
+        // Navigate to main screen after successful login
+        Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(builder: (context) => MainScreen())
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('API Login failed. Please try again.'),
+          ),
+        );
+      }
     } catch (e) {
+      if (!mounted) return;  // Check before showing SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Login failed. Please check your credentials.'),

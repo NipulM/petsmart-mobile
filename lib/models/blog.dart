@@ -1,10 +1,11 @@
 class Blog {
   final String? id; // MongoDB document ID
-  final String blogId;
+  final int blogId;
   final String title;
   final String content;
   final String imageUrl;
-  final String createdAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   Blog({
     this.id,
@@ -13,8 +14,8 @@ class Blog {
     required this.content,
     required this.imageUrl,
     required this.createdAt,
+    required this.updatedAt,
   });
-
 
   Map<String, dynamic> toJson() {
     return {
@@ -22,7 +23,8 @@ class Blog {
       'title': title,
       'content': content,
       'image_url': imageUrl,
-      'created_at': createdAt,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
 
@@ -33,7 +35,8 @@ class Blog {
       title: json['title'],
       content: json['content'],
       imageUrl: json['image_url'],
-      createdAt: json['created_at'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 }
