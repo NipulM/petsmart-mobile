@@ -41,8 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
       final categoryList = await _categoryService.getAllCategories();
       setState(() {
         categories = {
-          for (var category in categoryList)
-            category.name: category.categoryId
+          for (var category in categoryList) category.name: category.categoryId
         };
         _isLoading = false;
       });
@@ -57,11 +56,18 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void applyFilters() async {
-    if (selectedCategory == null || selectedPriceRange == null) return;
-
-    final (minPrice, maxPrice) = priceRanges[selectedPriceRange]!;
+    if (selectedCategory == null) return;
 
     try {
+      String? minPrice;
+      String? maxPrice;
+      
+      if (selectedPriceRange != null) {
+        final (min, max) = priceRanges[selectedPriceRange]!;
+        minPrice = min;
+        maxPrice = max;
+      }
+
       final filteredProducts = await _productService.getProductsByFilter(
         categories[selectedCategory].toString(),
         minPrice,
@@ -194,9 +200,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: NewProductItem(
                                   productName: product.name,
                                   productDescription: product.description,
-                                  productShortDescription: product.shortDescription,
+                                  productShortDescription:
+                                      product.shortDescription,
                                   productImage: product.imageUrl,
                                   productPrice: product.price,
+                                  origin: 'search',
                                 ),
                               );
                             },

@@ -67,8 +67,10 @@ class ProductService {
       if (minPrice != null) queryParams['minPrice'] = minPrice;
       if (maxPrice != null) queryParams['maxPrice'] = maxPrice;
 
-      final uri =
-          Uri.parse('$baseUrl/filter').replace(queryParameters: queryParams);
+      print('Query Parameters: $queryParams');
+
+      final uri = Uri.parse('$baseUrl/products/filter')
+          .replace(queryParameters: queryParams);
 
       final response = await http.get(
         uri,

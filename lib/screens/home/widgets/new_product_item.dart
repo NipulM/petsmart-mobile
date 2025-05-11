@@ -9,18 +9,22 @@ class NewProductItem extends StatelessWidget {
   final String productShortDescription;
   final String productImage;
   final double productPrice;
+  final String? origin;
 
-  const NewProductItem(
-      {super.key,
-      required this.productName,
-      required this.productDescription,
-      required this.productShortDescription,
-      required this.productImage,
-      required this.productPrice});
+  const NewProductItem({
+    super.key,
+    required this.productName,
+    required this.productDescription,
+    required this.productShortDescription,
+    required this.productImage,
+    required this.productPrice,
+    this.origin,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isSearch = origin == 'search';
 
     return GestureDetector(
       onTap: () {
@@ -33,8 +37,7 @@ class NewProductItem extends StatelessWidget {
                 title: productName,
                 description: productDescription,
                 price: productPrice,
-                category:
-                    'N/A', // You might want to add category to your product model
+                category: 'N/A',
               ),
             ),
           );
@@ -69,7 +72,7 @@ class NewProductItem extends StatelessWidget {
           children: [
             Container(
               height: 200,
-              width: 225,
+              width: isSearch ? double.infinity : 225,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(productImage),
@@ -95,7 +98,7 @@ class NewProductItem extends StatelessWidget {
               height: 5,
             ),
             Container(
-              width: 225,
+              width: isSearch ? double.infinity : 225,
               child: Text(
                 productShortDescription,
                 style: TextStyle(
@@ -111,12 +114,12 @@ class NewProductItem extends StatelessWidget {
               height: 15,
             ),
             Container(
-              width: 225, // Match the image width
+              width: isSearch ? double.infinity : 225,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: 80, // Fixed width for price section
+                    width: 80,
                     child: Text(
                       '\$${productPrice.toString()}',
                       style: TextStyle(
@@ -135,13 +138,10 @@ class NewProductItem extends StatelessWidget {
                         height: 36,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            foregroundColor:
-                                Theme.of(context).colorScheme.onPrimary,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
                             textStyle: Theme.of(context).textTheme.labelLarge,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 0),
+                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
