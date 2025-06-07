@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'package:cb011999/models/order.dart';
+import 'package:cb011999/models/order_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/cart.dart';
 import '../models/cart_item.dart';
 import '../services/token_service.dart';
 import '../services/order_service.dart';
+
 class CartService {
   static const String _cartKey = 'user_cart';
   final TokenService _tokenService = TokenService();
+
   Future<Cart> getCart() async {
     final prefs = await SharedPreferences.getInstance();
     final cartJson = prefs.getString(_cartKey);
@@ -53,13 +56,24 @@ class CartService {
   Future<void> checkout(
       String name, String email, String phone_number, String address) async {
     final cart = await getCart();
-    final userData = await _tokenService.getUserData();
+
+    // Convert CartItem list to OrderItem list
+    final orderItems = cart.items
+        .map((cartItem) => OrderItem(
+              productId: cartItem.productId,
+              name: cartItem.name,
+              price: cartItem.price,
+              quantity: cartItem.quantity,
+              imageUrl: cartItem.imageUrl,
+            ))
+        .toList();
+
     final order = Order(
       name: name,
       email: email,
       phone_number: phone_number,
       address: address,
-      order_items: cart.items,
+      order_items: orderItems,
       total_amount: cart.total,
       status: "pending",
       created_at: DateTime.now().toIso8601String(),

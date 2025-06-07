@@ -4,6 +4,7 @@ import 'package:cb011999/screens/home/home_screen.dart';
 import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:cb011999/screens/search/search_screen.dart';
 import 'package:cb011999/screens/subscription/subscription_screen.dart';
+import 'package:cb011999/screens/profile/profile_screen.dart';
 import 'package:cb011999/widgets/cart_bottom_sheet.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +158,21 @@ class _MainScreenState extends State<MainScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => const ProfileScreen(),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.easeInOut;
+                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                        var offsetAnimation = animation.drive(tween);
+                        return SlideTransition(position: offsetAnimation, child: child);
+                      },
+                    ),
+                  );
+                },
                 child: const CircleAvatar(
                   radius: 20,
                   backgroundImage: AssetImage("assets/images/profile_icon.png"),

@@ -101,4 +101,26 @@ class UserService {
       return null;
     }
   }
+
+  // Update user profile
+  Future<bool> updateUserProfile({String? phone, String? address}) async {
+    try {
+      print('Updating user profile with phone: $phone and address: $address');
+
+      final headers = await _getAuthHeaders();
+      final response = await http.put(
+        Uri.parse('$baseUrl/user/profile'),
+        headers: headers,
+        body: jsonEncode({
+          if (phone != null) 'phone': phone,
+          if (address != null) 'address': address,
+        }),
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      print('Update user profile error: $e');
+      return false;
+    }
+  }
 }

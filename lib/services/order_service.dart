@@ -65,4 +65,35 @@ class OrderService {
       throw Exception('Failed to create order: $e');
     }
   }
+
+  Future<List<Order>> getOrders() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/orders'),
+        headers: await _headers,
+      );
+
+      print('Fetching orders from API...'); // Debug print
+      print('Response status code: ${response.statusCode}'); // Debug print
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        if (responseData['status'] == 'success') {
+          final Map<String, dynamic> data = responseData['data'];
+          final List<dynamic> orders = data['orders'];
+
+          print('API Response orders: $orders'); // Debug print
+
+          return orders.map((json) => Order.fromJson(json)).toList();
+        } else {
+          throw Exception('API request failed: ${responseData['status']}');
+        }
+      } else {
+        throw Exception('Failed to load orders: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching orders: $e'); // Debug print
+      throw Exception('Failed to load orders: $e');
+    }
+  }
 }
