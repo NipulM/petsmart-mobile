@@ -89,27 +89,27 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
   Future<void> _checkout() async {
     final locationInfo = await _cartService.getCurrentLocationInfo();
 
-    // if (!_userData!.containsKey('name') ||
-    //     !_userData!.containsKey('email') ||
-    //     !_userData!.containsKey('phone') ||
-    //     !_userData!.containsKey('address') ||
-    //     _userData!['name'] == null ||
-    //     _userData!['email'] == null ||
-    //     _userData!['phone'] == null ||
-    //     _userData!['address'] == null) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Please complete your profile first')),
-    //   );
-    //   return;
-    // }
+    if (!_userData!.containsKey('name') ||
+        !_userData!.containsKey('email') ||
+        !_userData!.containsKey('phone') ||
+        !_userData!.containsKey('address') ||
+        _userData!['name'] == null ||
+        _userData!['email'] == null ||
+        _userData!['phone'] == null ||
+        _userData!['address'] == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please complete your profile first')),
+      );
+      return;
+    }
 
-    // await _cartService.checkout(
-    //   _userData!['name'],
-    //   _userData!['email'],
-    //   _userData!['phone'],
-    //   _userData!['address'],
-    // );
-    // await _loadCartAndUserData();
+    await _cartService.checkout(
+      _userData!['name'],
+      _userData!['email'],
+      _userData!['phone'],
+      _userData!['address'],
+    );
+    await _loadCartAndUserData();
   }
 
   @override
@@ -221,18 +221,56 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Shipping:'),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const Text('FREE'),
-                          if (_shippingLocation != null)
-                            Text(
-                              _shippingLocation!,
-                              style: Theme.of(context).textTheme.bodySmall,
-                              textAlign: TextAlign.end,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Text('Shipping:'),
+                                const SizedBox(width: 8),
+                                const Text('FREE'),
+                              ],
                             ),
-                        ],
+                            if (_shippingLocation != null) ...[
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 8,
+                                    height: 8,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _shippingLocation!,
+                                      style: Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      // Update the address in userData
+                                      setState(() {
+                                        _userData!['address'] = _shippingLocation;
+                                      });
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Address updated successfully'),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Use'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
