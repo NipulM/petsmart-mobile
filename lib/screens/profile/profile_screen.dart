@@ -4,6 +4,8 @@ import 'package:cb011999/services/order_service.dart';
 import 'package:cb011999/models/order.dart';
 import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '../../services/subscription_box_service.dart';
+import '../../models/subscription_box.dart';
 
 // String extension to capitalize first letter
 extension StringExtension on String {
@@ -22,9 +24,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final UserService _userService = UserService();
   final OrderService _orderService = OrderService();
+  final SubscriptionBoxService _subscriptionBoxService =
+      SubscriptionBoxService();
   final player = AudioPlayer();
   Map<String, dynamic>? _userData;
   List<Order>? _orders;
+  List<SubscriptionBox>? _subscriptionBoxes;
   bool _isLoading = true;
   String _selectedAnimal = 'dog'; // Default selected animal
 
@@ -45,11 +50,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final userData = await _userService.getUserProfile();
       final orders = await _orderService.getOrders();
+      final subscriptionBoxes =
+          await _subscriptionBoxService.getSubscriptionBoxes();
 
       if (mounted) {
         setState(() {
           _userData = userData;
           _orders = orders;
+          _subscriptionBoxes = subscriptionBoxes;
           _isLoading = false;
         });
       }
@@ -142,7 +150,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _playAnimalSound() async {
     try {
       await player.stop();
-      final soundFile = _selectedAnimal == 'dog' ? 'dog_bark.mp3' : 'cat_meow.mp3';
+      final soundFile =
+          _selectedAnimal == 'dog' ? 'dog_bark.mp3' : 'cat_meow.mp3';
       await player.setSource(AssetSource('audio/$soundFile'));
       await player.resume();
     } catch (e) {
@@ -199,7 +208,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             ClipOval(
                               child: Image(
-                                image: AssetImage('assets/images/cat_icon.webp'),
+                                image:
+                                    AssetImage('assets/images/cat_icon.webp'),
                                 width: 32,
                                 height: 32,
                                 fit: BoxFit.cover,
@@ -259,8 +269,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               const CircleAvatar(
                                 radius: 50,
-                                backgroundImage:
-                                    AssetImage("assets/images/profile_icon.png"),
+                                backgroundImage: AssetImage(
+                                    "assets/images/profile_icon.png"),
                               ),
                               Positioned(
                                 right: -10,
@@ -269,7 +279,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   icon: const Icon(Icons.camera_alt),
                                   onPressed: () {}, // We'll handle this later
                                   style: IconButton.styleFrom(
-                                    backgroundColor: Theme.of(context).primaryColor,
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
                                     foregroundColor: Colors.white,
                                   ),
                                 ),
@@ -345,7 +356,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     if (_orders?.isEmpty ?? true)
                       Center(
                         child: SizedBox(
-                          height: 400,
+                          height: 200, // Reduced height
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -405,8 +416,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'Total: \$${order.total_amount.toStringAsFixed(2)}'),
                                   Text(
                                       'Date: ${order.created_at.toString().split('.')[0]}'),
-                                  Text(
-                                      'Ordered Address: ${order.address}'),
+                                  Text('Ordered Address: ${order.address}'),
                                   if (order.delivered_at != null)
                                     Text(
                                         'Delivered: ${order.delivered_at.toString().split('.')[0]}'),
@@ -458,9 +468,227 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       ),
 
+                    const SizedBox(height: 32),
+
+                    // Subscription Boxes Section
+                    Text(
+                      'Subscription Boxes',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 16),
+                    if (_subscriptionBoxes == null)
+                      const Center(child: CircularProgressIndicator())
+                    else if (_subscriptionBoxes!.isEmpty)
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.pets,
+                                  size: 64, color: Colors.grey),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'To place a subscription box, please contact our support team:',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              const SizedBox(height: 8),
+                              SelectableText(
+                                'support@petsmart.com',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _subscriptionBoxes?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          final box = _subscriptionBoxes![index];
+                          return Card(
+                            elevation: 2,
+                            margin: const EdgeInsets.only(bottom: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.1),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      topRight: Radius.circular(12),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Subscription #${box.id}',
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            'Status: ${box.status.toUpperCase()}',
+                                            style: TextStyle(
+                                              color: box.status == 'active'
+                                                  ? Colors.green
+                                                  : Colors.grey,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 6,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Text(
+                                          '${box.remainingDays} days left',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Items in this box:',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      ...box.orderItems.map((item) => Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8),
+                                            child: Row(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: Image.network(
+                                                    item.imageUrl,
+                                                    width: 60,
+                                                    height: 60,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        item.name,
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'Quantity: ${item.quantity}',
+                                                        style: const TextStyle(
+                                                            color: Colors.grey),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '\$${item.price}',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )),
+                                      const Divider(),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            'Total Amount:',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            '\$${box.totalAmount}',
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Start Date: ${box.formattedStartDate}',
+                                            style: const TextStyle(
+                                                color: Colors.grey),
+                                          ),
+                                          Text(
+                                            'Expires: ${box.formattedExpiryDate}',
+                                            style: const TextStyle(
+                                                color: Colors.grey),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+
                     // Logout Button
                     Container(
-                      margin: const EdgeInsets.only(bottom: 24),
+                      margin: const EdgeInsets.only(top: 32, bottom: 24),
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _handleLogout,

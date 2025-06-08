@@ -42,8 +42,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
       setState(() {
         _cart = cart;
         // Format the shipping location
-        _shippingLocation =
-            '${locationInfo['road']}, ${locationInfo['state']}, ${locationInfo['country']}';
+        _shippingLocation = '${locationInfo['displayName']}';
         if (userDataString != null) {
           // Convert the string format to proper JSON format
           // Remove the curly braces and split by comma
@@ -137,167 +136,177 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Shopping Cart',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          ),
-          const Divider(),
-
-          // Billing Information
-          if (_userData != null) ...[
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Billing Information',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    Text('Name: ${_userData!['name'] ?? 'N/A'}'),
-                    Text('Email: ${_userData!['email'] ?? 'N/A'}'),
-                    if (_userData!['phone'] != null)
-                      Text('Phone: ${_userData!['phone']}'),
-                    if (_userData!['address'] != null)
-                      Text('Address: ${_userData!['address']}'),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
-
-          // Cart Items
           Expanded(
-            child: ListView.builder(
-              itemCount: _cart!.items.length,
-              itemBuilder: (context, index) {
-                final item = _cart!.items[index];
-                return CartItemTile(
-                  item: item,
-                  onQuantityChanged: (quantity) =>
-                      _updateQuantity(item.productId, quantity),
-                  onRemove: () => _removeItem(item.productId),
-                );
-              },
-            ),
-          ),
-
-          // Order Summary
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
+            child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Order Summary',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
+                  // Header
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Subtotal:'),
-                      Text('\$${_cart!.total.toStringAsFixed(2)}'),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text('Shipping:'),
-                                const SizedBox(width: 8),
-                                const Text('FREE'),
-                              ],
-                            ),
-                            if (_shippingLocation != null) ...[
-                              const SizedBox(height: 4),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 8,
-                                    height: 8,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(
-                                      _shippingLocation!,
-                                      style: Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      // Update the address in userData
-                                      setState(() {
-                                        _userData!['address'] = _shippingLocation;
-                                      });
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('Address updated successfully'),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text('Use'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ],
-                        ),
+                      Text(
+                        'Shopping Cart',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(context),
                       ),
                     ],
                   ),
                   const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total:',
-                        style: Theme.of(context).textTheme.titleMedium,
+
+                  // Billing Information
+                  if (_userData != null) ...[
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Billing Information',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text('Name: ${_userData!['name'] ?? 'N/A'}'),
+                            Text('Email: ${_userData!['email'] ?? 'N/A'}'),
+                            if (_userData!['phone'] != null)
+                              Text('Phone: ${_userData!['phone']}'),
+                            if (_userData!['address'] != null)
+                              Text('Address: ${_userData!['address']}'),
+                          ],
+                        ),
                       ),
-                      Text(
-                        '\$${_cart!.total.toStringAsFixed(2)}',
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                      ),
-                    ],
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+
+                  // Cart Items
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _cart!.items.length,
+                    itemBuilder: (context, index) {
+                      final item = _cart!.items[index];
+                      return CartItemTile(
+                        item: item,
+                        onQuantityChanged: (quantity) =>
+                            _updateQuantity(item.productId, quantity),
+                        onRemove: () => _removeItem(item.productId),
+                      );
+                    },
                   ),
+
+                  // Order Summary
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Order Summary',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Subtotal:'),
+                              Text('\$${_cart!.total.toStringAsFixed(2)}'),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text('Shipping:'),
+                                        const SizedBox(width: 8),
+                                        const Text('FREE'),
+                                      ],
+                                    ),
+                                    if (_shippingLocation != null) ...[
+                                      const SizedBox(height: 4),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 8,
+                                            height: 8,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: Text(
+                                              _shippingLocation!,
+                                              style:
+                                                  Theme.of(context).textTheme.bodySmall,
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              // Update the address in userData
+                                              setState(() {
+                                                _userData!['address'] =
+                                                    _shippingLocation;
+                                              });
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Address updated successfully'),
+                                                  duration: Duration(seconds: 2),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text('Use'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total:',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                '\$${_cart!.total.toStringAsFixed(2)}',
+                                style:
+                                    Theme.of(context).textTheme.titleMedium?.copyWith(
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
           ),
-
-          const SizedBox(height: 16),
-
           // Checkout Button
           ElevatedButton(
             style: ElevatedButton.styleFrom(

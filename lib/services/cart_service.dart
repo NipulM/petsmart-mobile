@@ -62,6 +62,7 @@ class CartService {
         var decodedData = jsonDecode(response.body);
         var address = decodedData['address'];
 
+        print("======================");
         print({
           'latitude': _locationData.latitude,
           'longitude': _locationData.longitude,
@@ -74,6 +75,7 @@ class CartService {
           'road': address['road'],
           'suburb': address['suburb'],
         });
+        print("======================");
 
         return {
           'latitude': _locationData.latitude,
