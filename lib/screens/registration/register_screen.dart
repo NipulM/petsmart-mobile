@@ -18,6 +18,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameInput = TextEditingController();
   TextEditingController emailAddress = TextEditingController();
   TextEditingController password = TextEditingController();
+  bool isLoading = false;
 
   String name = "";
   String email = "";
@@ -33,6 +34,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> register(email, password) async {
+    setState(() {
+      isLoading = true;
+    });
+    
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -60,6 +65,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: password,
       );
 
+      if (!mounted) return;
+
       if (!apiRegistrationSuccess) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -82,6 +89,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      
       String errorMessage = 'An error occurred';
       if (e.code == 'weak-password') {
         errorMessage = 'The password provided is too weak.';
@@ -98,6 +107,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       );
     } catch (e) {
+      if (!mounted) return;
+      
       print(e.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -105,6 +116,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           backgroundColor: Colors.red,
         ),
       );
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -218,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: double.infinity,
                       height: 65, // Adjust the height of the button
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: isLoading ? null : () {
                           setState(() {
                             name = nameInput.text;
                             email = emailAddress.text;
@@ -258,13 +275,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: Text("Signup",
-                            style: TextStyle(
-                              fontFamily: "Roboto Regular",
-                              fontSize: 20,
-                              color: Colors
-                                  .white, // Use font weight to specify bold
-                            )),
+                        child: isLoading
+                            ? SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.0,
+                                )
+                              )
+                            : Text(
+                                "Signup",
+                                style: TextStyle(
+                                  fontFamily: "Roboto Regular",
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                )
+                              ),
                       ),
                     ),
                   ),

@@ -16,11 +16,16 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailAddress = TextEditingController();
   TextEditingController password = TextEditingController();
   final userService = UserService();
+  bool isLoading = false;
 
   String email = "";
   String pass = "";
 
   Future<void> login(email, password) async {
+    setState(() {
+      isLoading = true;
+    });
+    
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -53,6 +58,12 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Text('Login failed. Please check your credentials.'),
         ),
       );
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -159,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         height: 65,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: isLoading ? null : () {
                             setState(() {
                               email = emailAddress.text;
                               pass = password.text;
@@ -198,13 +209,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          child: Text("Log in",
-                              style: TextStyle(
-                                fontFamily: "Roboto Regular",
-                                fontSize: 20,
-                                color: Colors
-                                    .white, // Use font weight to specify bold
-                              )),
+                          child: isLoading 
+                            ? SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.0,
+                                )
+                              )
+                            : Text(
+                                "Log in",
+                                style: TextStyle(
+                                  fontFamily: "Roboto Regular",
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                )
+                              ),
                         ),
                       ),
                     ),
