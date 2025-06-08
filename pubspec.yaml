@@ -39,6 +39,8 @@ dependencies:
   http: ^1.2.0
   shared_preferences: ^2.2.2
   location: ^5.0.3
+  audioplayers: ^5.2.1
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,10 @@ flutter:
     - assets/images/blog_example.jpg
     - assets/images/app_icon.png
     - assets/images/profile_icon.png
+    - assets/images/dog_icon.jpg
+    - assets/images/cat_icon.webp
+    - assets/audio/dog_bark.mp3
+    - assets/audio/cat_meow.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

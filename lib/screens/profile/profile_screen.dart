@@ -3,6 +3,7 @@ import 'package:cb011999/services/user_service.dart';
 import 'package:cb011999/services/order_service.dart';
 import 'package:cb011999/models/order.dart';
 import 'package:cb011999/screens/registration/login_screen.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 // String extension to capitalize first letter
 extension StringExtension on String {
@@ -21,14 +22,22 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final UserService _userService = UserService();
   final OrderService _orderService = OrderService();
+  final player = AudioPlayer();
   Map<String, dynamic>? _userData;
   List<Order>? _orders;
   bool _isLoading = true;
+  String _selectedAnimal = 'dog'; // Default selected animal
 
   @override
   void initState() {
     super.initState();
     _loadUserData();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   Future<void> _loadUserData() async {
@@ -130,6 +139,98 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  Future<void> _playAnimalSound() async {
+    try {
+      await player.stop();
+      final soundFile = _selectedAnimal == 'dog' ? 'dog_bark.mp3' : 'cat_meow.mp3';
+      await player.setSource(AssetSource('audio/$soundFile'));
+      await player.resume();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error playing sound: $e')),
+        );
+      }
+    }
+  }
+
+  Widget _buildSoundSection() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Play Animal Sounds',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _selectedAnimal,
+                    decoration: const InputDecoration(
+                      labelText: 'Select Animal',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'dog',
+                        child: Row(
+                          children: [
+                            ClipOval(
+                              child: Image(
+                                image: AssetImage('assets/images/dog_icon.jpg'),
+                                width: 32,
+                                height: 32,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text('Dog'),
+                          ],
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'cat',
+                        child: Row(
+                          children: [
+                            ClipOval(
+                              child: Image(
+                                image: AssetImage('assets/images/cat_icon.webp'),
+                                width: 32,
+                                height: 32,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text('Cat'),
+                          ],
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => _selectedAnimal = value);
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+                IconButton.filled(
+                  onPressed: _playAnimalSound,
+                  icon: const Icon(Icons.play_arrow),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -154,10 +255,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Center(
                       child: Column(
                         children: [
-                          const CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                AssetImage("assets/images/profile_icon.png"),
+                          Stack(
+                            children: [
+                              const CircleAvatar(
+                                radius: 50,
+                                backgroundImage:
+                                    AssetImage("assets/images/profile_icon.png"),
+                              ),
+                              Positioned(
+                                right: -10,
+                                bottom: -10,
+                                child: IconButton(
+                                  icon: const Icon(Icons.camera_alt),
+                                  onPressed: () {}, // We'll handle this later
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Theme.of(context).primaryColor,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -172,6 +289,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 32),
+
+                    // Animal Sounds Section
+                    _buildSoundSection(),
+                    const SizedBox(height: 16),
 
                     // User Information
                     Card(
