@@ -58,9 +58,27 @@ class _SubscriptionSectionState extends State<SubscriptionSection> {
             const Center(child: CircularProgressIndicator())
           else if (_error != null)
             Center(
-              child: Text(
-                'Error loading subscriptions: $_error',
-                style: TextStyle(color: Colors.red),
+              child: SizedBox(
+                height: 400,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      color: Colors.grey,
+                      size: 40,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Failed to load subscription plans.\nPlease check your connection and try again.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           else if (_subscriptions.isEmpty)

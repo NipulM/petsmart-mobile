@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import '../../../models/cart_item.dart';
 import '../../../services/cart_service.dart';
 import '../../../widgets/add_cart_button.dart';
+import '../../../models/favorite.dart';
+import '../../../services/favorite_service.dart';
 
 class ProductDetailsCard extends StatefulWidget {
   final String title;
@@ -29,7 +31,63 @@ class ProductDetailsCard extends StatefulWidget {
 
 class _ProductDetailsCardState extends State<ProductDetailsCard> {
   final CartService _cartService = CartService();
+  final FavoriteService _favoriteService = FavoriteService();
   int _quantity = 1;
+  bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFavoriteStatus();
+  }
+
+  Future<void> _checkFavoriteStatus() async {
+    final isFavorite = await _favoriteService.isProductFavorite(
+      widget.title.toLowerCase().replaceAll(' ', '_'),
+    );
+    if (mounted) {
+      setState(() {
+        _isFavorite = isFavorite;
+      });
+    }
+  }
+
+  Future<void> _toggleFavorite() async {
+    try {
+      final favorite = Favorite(
+        productId: widget.title.toLowerCase().replaceAll(' ', '_'),
+        name: widget.title,
+        price: widget.price,
+        imageUrl: widget.imageUrl,
+        category: widget.category,
+        description: widget.description,
+      );
+
+      await _favoriteService.toggleFavorite(favorite);
+      
+      if (mounted) {
+        setState(() {
+          _isFavorite = !_isFavorite;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_isFavorite ? 'Added to favorites' : 'Removed from favorites'),
+            duration: Duration(seconds: 1),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error updating favorites: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   void _updateQuantity(int quantity) {
     setState(() {
@@ -102,13 +160,27 @@ class _ProductDetailsCardState extends State<ProductDetailsCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            widget.title,
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: 'Roboto Bold',
-              color: isDarkMode ? Colors.white : Colors.black,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Roboto Bold',
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: Icon(
+                  _isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: _isFavorite ? Colors.red : (isDarkMode ? Colors.white : Colors.black),
+                ),
+                onPressed: _toggleFavorite,
+              ),
+            ],
           ),
           Text(
             "#${widget.category}",

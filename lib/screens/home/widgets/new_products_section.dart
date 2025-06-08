@@ -52,9 +52,24 @@ class _NewProductsSectionState extends State<NewProductsSection> {
                 ? const Center(child: CircularProgressIndicator())
                 : _error != null
                     ? Center(
-                        child: Text(
-                          'Error loading products: $_error',
-                          style: TextStyle(color: Colors.red),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              color: Colors.grey,
+                              size: 40,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              'Failed to load products.\nPlease check your connection and try again.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     : _products.isEmpty

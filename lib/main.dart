@@ -6,6 +6,8 @@ import 'package:cb011999/screens/search/search_screen.dart';
 import 'package:cb011999/screens/subscription/subscription_screen.dart';
 import 'package:cb011999/screens/profile/profile_screen.dart';
 import 'package:cb011999/widgets/cart_bottom_sheet.dart';
+import 'package:cb011999/widgets/favorites_bottom_sheet.dart';
+import 'package:cb011999/services/favorite_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -97,6 +99,23 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   final List<int> _navigationStack = [0];
+  final FavoriteService _favoriteService = FavoriteService();
+  bool _hasFavorites = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFavorites();
+  }
+
+  Future<void> _checkFavorites() async {
+    final favorites = await _favoriteService.getAllFavorites();
+    if (mounted) {
+      setState(() {
+        _hasFavorites = favorites.isNotEmpty;
+      });
+    }
+  }
 
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
@@ -134,13 +153,23 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,
-          // leading: _navigationStack.length > 1
-          //     ? IconButton(
-          //         icon: const Icon(Icons.arrow_back),
-          //         onPressed: _handleBackPress,
-          //       )
-          //     : null,
           actions: [
+            if (_hasFavorites)
+              IconButton(
+                icon: const Icon(Icons.favorite),
+                color: Colors.red,
+                iconSize: 25,
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      child: const FavoritesBottomSheet(),
+                    ),
+                  );
+                },
+              ),
             IconButton(
               icon: const Icon(Icons.shopping_cart_outlined),
               iconSize: 25,

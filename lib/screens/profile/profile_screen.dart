@@ -344,9 +344,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 16),
                     if (_orders?.isEmpty ?? true)
                       Center(
-                        child: Text(
-                          'No orders yet',
-                          style: Theme.of(context).textTheme.bodyLarge,
+                        child: SizedBox(
+                          height: 400,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.shopping_bag_outlined,
+                                color: Colors.grey,
+                                size: 40,
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                'No orders yet',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     else
