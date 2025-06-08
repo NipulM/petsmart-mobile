@@ -6,6 +6,7 @@ import 'package:cb011999/screens/registration/login_screen.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../../services/subscription_box_service.dart';
 import '../../models/subscription_box.dart';
+import '../../services/cart_service.dart';
 
 // String extension to capitalize first letter
 extension StringExtension on String {
@@ -73,7 +74,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _handleLogout() async {
     try {
+      // Clear token and user data from SharedPreferences
       await _userService.logout();
+      
+      // Clear cart data
+      final cartService = CartService();
+      await cartService.clearCart();
+
       if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginScreen()),
