@@ -405,6 +405,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'Total: \$${order.total_amount.toStringAsFixed(2)}'),
                                   Text(
                                       'Date: ${order.created_at.toString().split('.')[0]}'),
+                                  Text(
+                                      'Ordered Address: ${order.address}'),
                                   if (order.delivered_at != null)
                                     Text(
                                         'Delivered: ${order.delivered_at.toString().split('.')[0]}'),
