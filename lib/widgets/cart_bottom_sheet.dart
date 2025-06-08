@@ -18,6 +18,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
   Cart? _cart;
   bool _isLoading = true;
   Map<String, dynamic>? _userData;
+  String? _shippingLocation;
 
   @override
   void initState() {
@@ -31,13 +32,18 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
       final futures = await Future.wait([
         _cartService.getCart(),
         _tokenService.getUserData(),
+        _cartService.getCurrentLocationInfo(),
       ]);
 
       final cart = futures[0] as Cart;
       final userDataString = futures[1] as String?;
+      final locationInfo = futures[2] as Map<String, dynamic>;
 
       setState(() {
         _cart = cart;
+        // Format the shipping location
+        _shippingLocation =
+            '${locationInfo['road']}, ${locationInfo['state']}, ${locationInfo['country']}';
         if (userDataString != null) {
           // Convert the string format to proper JSON format
           // Remove the curly braces and split by comma
@@ -81,27 +87,29 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
   }
 
   Future<void> _checkout() async {
-    if (!_userData!.containsKey('name') ||
-        !_userData!.containsKey('email') ||
-        !_userData!.containsKey('phone') ||
-        !_userData!.containsKey('address') ||
-        _userData!['name'] == null ||
-        _userData!['email'] == null ||
-        _userData!['phone'] == null ||
-        _userData!['address'] == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please complete your profile first')),
-      );
-      return;
-    }
+    final locationInfo = await _cartService.getCurrentLocationInfo();
 
-    await _cartService.checkout(
-      _userData!['name'],
-      _userData!['email'],
-      _userData!['phone'],
-      _userData!['address'],
-    );
-    await _loadCartAndUserData();
+    // if (!_userData!.containsKey('name') ||
+    //     !_userData!.containsKey('email') ||
+    //     !_userData!.containsKey('phone') ||
+    //     !_userData!.containsKey('address') ||
+    //     _userData!['name'] == null ||
+    //     _userData!['email'] == null ||
+    //     _userData!['phone'] == null ||
+    //     _userData!['address'] == null) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text('Please complete your profile first')),
+    //   );
+    //   return;
+    // }
+
+    // await _cartService.checkout(
+    //   _userData!['name'],
+    //   _userData!['email'],
+    //   _userData!['phone'],
+    //   _userData!['address'],
+    // );
+    // await _loadCartAndUserData();
   }
 
   @override
@@ -211,9 +219,21 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                   const SizedBox(height: 4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text('Shipping:'),
-                      Text('FREE'),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Shipping:'),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          const Text('FREE'),
+                          if (_shippingLocation != null)
+                            Text(
+                              _shippingLocation!,
+                              style: Theme.of(context).textTheme.bodySmall,
+                              textAlign: TextAlign.end,
+                            ),
+                        ],
+                      ),
                     ],
                   ),
                   const Divider(),
